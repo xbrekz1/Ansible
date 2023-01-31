@@ -1,1 +1,40 @@
-
+---
+- hosts: os5333
+  gather_facts: yes
+  become: yes
+  tasks:
+## Закидываем дистрибутив на хост в /tmp
+## Переходим в /opt/hcfb/kafka и разархивируем
+    - name: разахрхивация дистрибутива и удаление Symlink
+      shell: >
+        cd {{ path }};
+        tar -xvf /tmp/kafka_{{ new_version }}.tgz;
+        rm -rf ./kafka;
+         
+    - name: удаляем конфиги из новой версии кафка и переносим со старой
+      shell: >
+        cd {{ path }};
+        rm -rf ./kafka_{{ new_version }}/config;
+         
+    - name: удаляем конфиги/замена их
+      shell: >
+        cd {{ path }};
+        cp -r ./kafka_{{ old_version }}/config/ ./kafka_{{ new_version }}/;
+        cp -r ./kafka_{{ old_version }}/ssl ./kafka_{{ new_version }}/;
+        cp -r ./kafka_{{ old_version }}/libs/kafka-oauth-1.0.39.jar ./kafka_{{ new_version }}/libs/;
+        
+    - name: актуализация kafka-server-start
+      shell: >
+        cd {{ path }}/kafka_{{ new_version }}/bin;
+        sed -i 's/export KAFKA_HEAP_OPTS="-Xmx{{ xmx_old }}G -Xms{{ xms_old }}G"/export KAFKA_HEAP_OPTS="-Xmx{{ xmx_new }}G -Xms{{ xms_new }}G"/' kafka-server-start.sh;
+         
+    - name: создаем Symlink для новой папки Kafka
+      shell: >
+        cd {{ path }};
+        ln -s ./kafka_{{ new_version }}/ ./kafka;
+         
+          
+##    - name: удаление старой папки Kafka
+##      shell: >
+##        cd {{ path }};
+##        rm -rf ./kafka_{{ old_version }}/;
