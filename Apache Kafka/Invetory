@@ -1,0 +1,23 @@
+[os5331]
+os5331 ansible_host=os-5331 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
+ 
+[os5155]
+os5155 ansible_host=os-5155 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
+ 
+[os5332]
+os5332 ansible_host=os-5332 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
+ 
+[os5333]
+os5333 ansible_host=os-5333 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
+ 
+[os5334]
+os5334 ansible_host=os-5334 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
+ 
+[os5328]
+os5328 ansible_host=os-5328 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
+ 
+[os5329]
+os5329 ansible_host=os-5329 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
+ 
+[os5330]
+os5330 ansible_host=os-5330 ansible_phyton_interpreter=/usr/bin/phyton3 ansible_user=ppetlin ansible_ssh_private_key_file=/home/ppetlin/openssh ansible_become_user=kafka
