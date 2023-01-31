@@ -1,0 +1,60 @@
+---
+- hosts: os5331
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: whoami
+      shell: whoami; pwd
+ 
+    - name: create topics
+      ignore_errors: yes
+      shell: >
+        cd /opt/hcfb/kafka/kafka;     
+        ./bin/kafka-topics.sh \
+        --create  --topic {{ topicname }}-{{ item }} \
+        --partitions 3 \
+        --replication-factor 3 \
+        --config retention.ms={{ retention }} \
+        --config min.insync.replicas=2 \
+        --bootstrap-server os-5331:9095 \
+        --command-config ./config/consumer.properties
+      with_items:
+        - "{{ postfixtest }}"
+      tags:
+        - write
+        - read
+ 
+    - name: write topics
+      shell: >
+        cd /opt/hcfb/kafka/kafka;
+        bin/kafka-acls.sh \
+        --bootstrap-server os-5331:9095 \
+        --add \
+        --allow-principal 'User:{{ user }}' \
+        --producer \
+        --topic {{ topicname }}-{{ item }} \
+        --command-config config/consumer.properties
+      with_items:
+        - "{{ postfixtest }}"
+      tags:
+        - write
+        - writeonly       
+ 
+    - name: permission READ
+      shell: >
+        cd /opt/hcfb/kafka/kafka;
+        bin/kafka-acls.sh \
+        --bootstrap-server os-5331:9095 \
+        --add \
+        --allow-principal 'User:{{ user }}' \
+        --operation Read \
+        --operation Describe \
+        --group '{{ item }}' \
+        --topic '{{ topicname }}-{{ item }}' \
+        --command-config config/consumer.properties
+      with_items:
+        - "{{ group }}"
+        - "{{ postfixtest }}"
+      tags:
+        - read
+        - readonly       
