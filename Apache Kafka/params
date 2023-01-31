@@ -1,0 +1,30 @@
+topicname: intellinx-queuing-updateStopList
+postfixtest:
+  - ft
+  - dev
+  - rtm
+  - ftm
+  - fp
+  - fsc
+  - rt
+  - rp
+  - fsc
+postfixload:
+  - load1
+  - load2
+group:
+  - myСredit_consumer1_group
+  - myСredit_consumer2_group
+  - myСredit_consumer3_group
+  - myСredit_consumer4_group
+user: my_credit
+retention: 172800000
+ 
+ 
+new_version: 2.13-3.2.1
+old_version: 2.13-3.0.0
+xmx_old: 1
+xms_old: 1
+xmx_new: 3
+xms_new: 3
+path: /opt/hcfb/kafka
