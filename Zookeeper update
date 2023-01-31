@@ -1,0 +1,28 @@
+---
+- hosts: os5329
+  gather_facts: yes
+  become: yes
+  tasks:
+## Закидываем дистрибутив на хост в /tmp
+## Переходим в /opt/hcfb/kafka и разархивируем
+    - name: разахрхивация дистрибутива и удаление Symlink
+      shell: >
+        cd {{ path }};
+        tar -xvf /tmp/kafka_{{ new_version }}.tgz;
+        rm -rf ./zookeeper;
+         
+    - name: удаляем конфиги из новой версии кафка и переносим со старой
+      shell: >
+        cd {{ path }};
+        rm -rf ./kafka_{{ new_version }}/config;
+        cp -r ./kafka_{{ old_version }}/config/ ./kafka_{{ new_version }}/;
+ 
+    - name: создаем Symlink для новой папки zookeeper
+      shell: >
+        cd {{ path }};
+        ln -s ./kafka_{{ new_version }}/ ./zookeeper;
+  
+##    - name: удаление старой папки Kafka
+##      shell: >
+##        cd {{ path }};
+##        rm -rf ./kafka_{{ old_version }}/;
